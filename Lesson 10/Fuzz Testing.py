@@ -28,6 +28,21 @@ In hac habitasse platea dictumst. Morbi et leo enim.
 Aenean ipsum ipsum, laoreet vel cursus a, tincidunt ultrices augue.
 Aliquam ac erat eget nunc lacinia imperdiet vel id nulla."""
 
+import array
 
 def fuzzit(content):
 # Write a random fuzzer for a simulated text viewer application
+    FuzzFactor = 250
+    num_tests = 10000
+
+    buf = bytearray(content, "utf-8")
+    strlst = []
+    for i in range(num_tests):
+        numwrites = random.randrange(math.ceil((float(len(buf)) / FuzzFactor))) + 1
+        for j in range(numwrites):
+            rbyte = random.randrange(256)
+            rn = random.randrange(len(buf))
+            buf[rn] = rbyte
+            strlst.append(str(buf))
+    return strlst
+
